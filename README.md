@@ -1,0 +1,1 @@
+<img src='./public/front-assets/site-view/img-1.png' style='width: 100%'>
