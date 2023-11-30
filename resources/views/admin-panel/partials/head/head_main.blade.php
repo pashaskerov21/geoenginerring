@@ -27,7 +27,14 @@
     <!-- Icons css -->
     <link href="{{ asset('admin-assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin-assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
-    
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
 </head>
 
 <body>
+<!-- Pre-loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="bouncing-loader"><div ></div><div ></div><div ></div></div>
+    </div>
+</div>
+<!-- End Preloader-->

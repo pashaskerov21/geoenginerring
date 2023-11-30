@@ -10,31 +10,14 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                 @csrf
                 <div class="row">
-                    @if ($errors->any())
-                        <div class="col-12">
-                            <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show"
-                                role="alert">
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
-                                @foreach ($errors->all() as $error)
-                                    <div class="mb-1">{{ $error }}</div>
-                                @endforeach
-                            </div>
-
-                        </div>
-                    @endif
                     <div class="col-12 col-lg-7">
                         <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                             <li class="nav-item">
                                 <a href="#tab_az" data-bs-toggle="tab" class="nav-link rounded-0 active">
                                     <span>az</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#tab_tr" data-bs-toggle="tab" class="nav-link rounded-0">
-                                    <span>tr</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -54,7 +37,7 @@
                                 <input type="hidden" name="lang[]" value="az">
                                 <div class="mb-3">
                                     <label class="form-label">başlıq az</label>
-                                    <input type="text" class="form-control" name="title[]">
+                                    <input type="text" class="form-control" name="title[]" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">ünvan az</label>
@@ -71,32 +54,11 @@
                                     <textarea name="main_text[]" hidden></textarea>
                                 </div>
                             </div>
-                            <div class="tab-pane show" id="tab_tr">
-                                <input type="hidden" name="lang[]" value="tr">
-                                <div class="mb-3">
-                                    <label class="form-label">başlıq tr</label>
-                                    <input type="text" class="form-control" name="title[]">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">ünvan tr</label>
-                                    <input type="text" class="form-control" name="address[]">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">card mətn tr</label>
-                                    <div class="quill-editor" style="height: 300px;"></div>
-                                    <textarea name="card_text[]" hidden></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">əsas mətn tr</label>
-                                    <div class="quill-editor" style="height: 300px;"></div>
-                                    <textarea name="main_text[]" hidden></textarea>
-                                </div>
-                            </div>
                             <div class="tab-pane" id="tab_en">
                                 <input type="hidden" name="lang[]" value="en">
                                 <div class="mb-3">
                                     <label class="form-label">başlıq en</label>
-                                    <input type="text" class="form-control" name="title[]">
+                                    <input type="text" class="form-control" name="title[]" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">ünvan en</label>
@@ -117,7 +79,7 @@
                                 <input type="hidden" name="lang[]" value="ru">
                                 <div class="mb-3">
                                     <label class="form-label">başlıq ru</label>
-                                    <input type="text" class="form-control" name="title[]">
+                                    <input type="text" class="form-control" name="title[]" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">ünvan ru</label>
@@ -139,10 +101,9 @@
                     <div class="col-12 col-lg-5">
                         <div class="mb-3">
                             <label class="form-label">kateqoriya seçin</label>
-                            <select name="category_id" class="form-select">
-                                <option disabled selected>{{ $categories->count() == 0 ? 'Kateqoriya yoxdur' : 'Seçin' }}</option>
+                            <select name="category_id" class="form-select" required>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->getTranslate->first()->name }}</option>
+                                    <option value="{{ $category->id }}">{{ $category->getTranslate->first()->title }}</option>
                                 @endforeach
                             </select>
                             @if ($categories->count() == 0)
@@ -153,7 +114,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">image</label>
-                            <input type="file" class="form-control" name="image">
+                            <input type="file" class="form-control" name="image" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">ünvan url</label>
@@ -162,8 +123,7 @@
                         <div class="mb-3">
                             <label class="form-label">Ana səhifədə görünsün?</label>
                             <div>
-                                <input type="checkbox" id="switch1" data-switch="bool" name="home_status"
-                                    value="1" />
+                                <input type="checkbox" id="switch1" data-switch="bool" name="home_status" value="1" />
                                 <label for="switch1" data-on-label="Hə" data-off-label="Yox"></label>
                             </div>
                         </div>

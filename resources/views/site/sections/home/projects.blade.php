@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-12 col-lg-6 col-xl-5">
                         <div class="project-img"
-                            style="background-image: url('{{ asset('uploads/projects/' . $project->image) }}');">
+                            style="background-image: url('{{ asset('storage/uploads/projects/' . $project->image) }}');">
                         </div>
                     </div>
                 </div>

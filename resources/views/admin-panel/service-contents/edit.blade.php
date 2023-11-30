@@ -10,32 +10,10 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('admin.service-contents.update', $altcontent->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.service-contents.update', $altcontent->id) }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                 @csrf
                 @method('PUT')
                 <div class="row">
-                    @if ($errors->any())
-                        <div class="col-12">
-                            @foreach ($errors->all() as $error)
-                                <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show"
-                                    role="alert">
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
-                                    {{ $error }}
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                    @if (session('success'))
-                        <div class="col-12">
-                            <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show"
-                                role="alert">
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                                {{ session('success') }}
-                            </div>
-                        </div>
-                    @endif
                     <div class="col-12 col-lg-7">
                         <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                             @foreach ($altcontent->getTranslate as $index => $translate)
@@ -53,7 +31,7 @@
                                     <input type="hidden" name="lang[]" value="{{$translate->lang}}">
                                     <div class="mb-3">
                                         <label class="form-label">başlıq {{$translate->lang}}</label>
-                                        <input type="text" class="form-control" name="title[]" value="{{$translate->title}}">
+                                        <input type="text" class="form-control" name="title[]" value="{{$translate->title}}" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">mətn {{$translate->lang}}</label>
@@ -70,16 +48,18 @@
                             <label class="form-label">xidmət seçin</label>
                             <select name="service_id" class="form-select">
                                 @foreach ($services as $service)
-                                    <option value="{{ $service->id }}" {{$altcontent->service_id == $service->id ? 'selected' : ''}}>{{ $service->getTranslate->first()->title }}</option>
+                                    <option value="{{ $service->id }}" @selected($altcontent->service_id == $service->id ? true : false)>
+                                        {{ $service->getTranslate->first()->title }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">image</label>
                             <input type="file" class="form-control" name="image">
-                            @if ($altcontent->image_old)
+                            @if ($altcontent->image)
                                 <div class="image-review">
-                                    <img src="{{asset('uploads/services/altcontents/'.$altcontent->image_old)}}" alt="">
+                                    <img src="{{asset('storage/uploads/services/altcontents/'.$altcontent->image)}}" alt="">
                                 </div>
                             @endif
                         </div>

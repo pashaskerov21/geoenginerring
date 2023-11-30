@@ -9,16 +9,6 @@
         </div>
     </div>
     <div class="row">
-        @if (session('success'))
-            <div class="col-12">
-                <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show" role="alert">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                        aria-label="Close"></button>
-                    {{ session('success') }}
-                </div>
-            </div>
-        @endif
-
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -51,8 +41,7 @@
                             <td style="width: 250px"> 
                                 <div class="homecheck-td" >
                                     <input class="homestatus-checkbox" type="checkbox" id="switch-{{$service->id}}" data-switch="bool" data-id="{{ $service->id }}"
-                                        name="home_status" value="1"
-                                        {{ $service->home_status == 1 ? 'checked' : '' }} />
+                                        name="home_status" value="1" @checked($service->home_status == 1 ? true : false) />
                                     <label for="switch-{{$service->id}}" data-on-label="Hə" data-off-label="Yox"></label>
                                 </div>
                             </td>

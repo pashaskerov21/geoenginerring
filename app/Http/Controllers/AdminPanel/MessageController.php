@@ -66,6 +66,6 @@ class MessageController extends Controller
         $message = Message::findOrFail($id);
         $message->destroy = 1;
         $message->save();
-        return redirect()->route('admin.messages.index')->with('success','Uğurla silindi');
+        return redirect()->route('admin.messages.index')->with('delete_message','Uğurla silindi');
     }
 }

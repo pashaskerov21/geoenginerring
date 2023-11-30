@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\View;
 
 use App\Http\Controllers\Controller;
-use App\Models\About;
-use App\Models\AltMenu;
 use App\Models\ApplicationCertificate;
 use App\Models\ApplicationEducation;
 use App\Models\ApplicationLanguage;
@@ -23,15 +21,14 @@ class CareerController extends Controller
 {
     public function index()
     {
-        $lang = ['az' => '/insan-resurslari/vakansiyalar', 'tr' => '/tr/insan-kaynaklari/bos-pozisyonlar', 'en' => '/en/human-resources/vacancies', 'ru' => '/ru/celoveceskie-resursy/vakansii'];
+        $lang = ['az' => '/insan-resurslari/vakansiyalar', 'en' => '/en/human-resources/vacancies', 'ru' => '/ru/celoveceskie-resursy/vakansii'];
         $settings = Settings::findOrFail(1);
         $menues = Menu::where('destroy', 0)->orderBy('sort')->get();
-        $altMenues = AltMenu::where('destroy', 0)->orderBy('sort')->get();
         $services = Service::where('destroy', 0)->orderBy('sort')->get();
         $projectcategories = ProjectCategories::where('destroy', 0)->orderBy('sort')->get();
         $vacancies = Vacancy::where('destroy', 0)->orderBy('sort')->get();
         if ($vacancies->count() > 0) {
-            return view('site.pages.career.index', compact(['settings', 'lang', 'menues', 'altMenues', 'services', 'projectcategories', 'vacancies']));
+            return view('site.pages.career.index', compact(['settings', 'lang', 'menues', 'services', 'projectcategories', 'vacancies']));
         } else {
             return redirect()->route('apply_page_' . Session('lang'));
         }
@@ -44,25 +41,22 @@ class CareerController extends Controller
     {
         $lang = [
             'az' => '/insan-resurslari/is-ucun-muraciet',
-            'tr' => '/tr/insan-kaynaklari/is-basvurusu',
             'en' => '/en/human-resources/apply-for-a-job',
             'ru' => '/ru/celoveceskie-resursy/zaiavka-na-rabotu'
         ];
         $settings = Settings::findOrFail(1);
         $menues = Menu::where('destroy', 0)->orderBy('sort')->get();
-        $altMenues = AltMenu::where('destroy', 0)->orderBy('sort')->get();
         $services = Service::where('destroy', 0)->orderBy('sort')->get();
         $projectcategories = ProjectCategories::where('destroy', 0)->orderBy('sort')->get();
         $vacancies = Vacancy::where('destroy', 0)->orderBy('sort')->get();
         $selectedVacancy = null;
-        return view('site.pages.career.form', compact(['settings', 'lang', 'menues', 'altMenues', 'services', 'projectcategories', 'vacancies', 'selectedVacancy']));
+        return view('site.pages.career.form', compact(['settings', 'lang', 'menues', 'services', 'projectcategories', 'vacancies', 'selectedVacancy']));
     }
     public function selectvacancy($slug)
     {
 
         $settings = Settings::findOrFail(1);
         $menues = Menu::where('destroy', 0)->orderBy('sort')->get();
-        $altMenues = AltMenu::where('destroy', 0)->orderBy('sort')->get();
         $services = Service::where('destroy', 0)->orderBy('sort')->get();
         $projectcategories = ProjectCategories::where('destroy', 0)->orderBy('sort')->get();
         $vacancies = Vacancy::where('destroy', 0)->orderBy('sort')->get();
@@ -73,11 +67,10 @@ class CareerController extends Controller
                 $vacancySlugs = VacancyTranslate::where('vacancy_id', $selectedVacancy->id)->get();
                 $lang = [
                     'az' => '/insan-resurslari/is-ucun-muraciet/' . $vacancySlugs->where('lang', 'az')->first()->slug,
-                    'tr' => '/tr/insan-kaynaklari/is-basvurusu/' . $vacancySlugs->where('lang', 'tr')->first()->slug,
                     'en' => '/en/human-resources/apply-for-a-job/' . $vacancySlugs->where('lang', 'en')->first()->slug,
                     'ru' => '/ru/celoveceskie-resursy/zaiavka-na-rabotu/' . $vacancySlugs->where('lang', 'ru')->first()->slug
                 ];
-                return view('site.pages.career.form', compact(['settings', 'lang', 'menues', 'altMenues', 'services', 'projectcategories', 'vacancies', 'selectedVacancy']));
+                return view('site.pages.career.form', compact(['settings', 'lang', 'menues', 'services', 'projectcategories', 'vacancies', 'selectedVacancy']));
             } else {
                 return redirect()->route('not_found');
             }
@@ -92,13 +85,13 @@ class CareerController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->image;
             $image = time() . $file->getClientOriginalName();
-            $file->move('uploads/applications/images', $image);
+            $file->storeAs('public/uploads/applications/images', $image);
         }
         $cv = null;
         if ($request->hasFile('cv')) {
             $file = $request->cv;
             $cv = time() . $file->getClientOriginalName();
-            $file->move('uploads/applications/cv', $cv);
+            $file->storeAs('public/uploads/applications/cv', $cv);
         }
         $application_id = VacancyApplication::create([
             'selected_vacancy' => $request->selected_vacancy,

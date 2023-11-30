@@ -7,7 +7,7 @@
         </div>
         <h2 class="page-title">{{__('main.about_us')}}</h2>
         <div class="text">
-            {!! $about->getTranslate->where('lang', Session('lang'))->first()->maintext !!}
+            {!! $about->getTranslate->where('lang', Session('lang'))->first()->main_text !!}
         </div>
     </div>
 </section>

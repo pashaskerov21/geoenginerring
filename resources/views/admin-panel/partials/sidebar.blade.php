@@ -106,21 +106,10 @@
                 </a>
             </li>
             <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebar-menu" class="side-nav-link">
-                    <i class="ri-menu-fill"></i>
+                <a href="{{ route('admin.menu.index') }}" class="side-nav-link">
+                    <i class="ri-team-fill"></i>
                     <span> Menyu </span>
-                    <span class="menu-arrow"></span>
                 </a>
-                <div class="collapse" id="sidebar-menu">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{ route('admin.menu.index') }}">Əsas Menyu</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.alt-menu.index') }}">Alt Menyu</a>
-                        </li>
-                    </ul>
-                </div>
             </li>
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebar-career" class="side-nav-link">

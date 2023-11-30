@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->integer('category_id');
             $table->string('image')->nullable();
-            $table->string('image_old')->nullable();
             $table->string('address_url')->nullable();
             $table->integer('home_status')->default(0);
             $table->integer('sort')->default(-1);

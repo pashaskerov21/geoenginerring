@@ -71,6 +71,6 @@ class ApplicationController extends Controller
         $application = VacancyApplication::findOrFail($id);
         $application->destroy = 1;
         $application->save();
-        return redirect()->route('admin.applications.index')->with('success','Uğurla silindi');
+        return redirect()->route('admin.applications.index')->with('delete_message','Uğurla silindi');
     }
 }

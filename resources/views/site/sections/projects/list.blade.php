@@ -4,11 +4,17 @@
             <a href="{{ route('index') }}">{{__('main.home_page')}}</a>
             <span>/</span>
             <a href="{{ route('projects_' . Session('lang')) }}">{{__('main.projects')}}</a>
+            @if ($category)
+            <span>/</span>
+            <a href="{{ route('projects_' . Session('lang')) }}">
+                {{ $category->getTranslate->where('lang', Session('lang'))->first()->title }}
+            </a>     
+            @endif
         </div>
         <h2 class="page-title">
             {{__('main.our_projects')}}
             @if ($category)
-                - {{ $category->getTranslate->where('lang', Session('lang'))->first()->name }}
+                - {{ $category->getTranslate->where('lang', Session('lang'))->first()->title }}
             @endif
         </h2>
         <div class="project-rows">
@@ -37,7 +43,7 @@
                     </div>
                     <div class="col-12 col-lg-6 col-xl-5">
                         <div class="project-img"
-                            style="background-image: url('{{ asset('uploads/projects/' . $project->image) }}');">
+                            style="background-image: url('{{ asset('storage/uploads/projects/' . $project->image) }}');">
                         </div>
                     </div>
                 </div>

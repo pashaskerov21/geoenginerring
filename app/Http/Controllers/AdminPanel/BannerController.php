@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BannerStoreRequest;
-use App\Http\Requests\BannerUpdateRequest;
+use App\Http\Requests\BannerRequest;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 
@@ -30,20 +29,18 @@ class BannerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BannerStoreRequest $request)
+    public function store(BannerRequest $request)
     {
-
+        $banner_img = null;
         if ($request->hasFile('image')) {
             $file = $request->image;
             $banner_img = time() . $file->getClientOriginalName();
-            $file->move('uploads/banner', $banner_img);
-
-            Banner::create([
-                'image' => $banner_img,
-                'image_old' => $banner_img,
-            ]);
-            return redirect()->route('admin.banner.index')->with('success', 'Uğurla əlavə edildi');
+            $file->storeAs('public/uploads/banner', $banner_img);
         }
+        Banner::create([
+            'image' => $banner_img,
+        ]);
+        return redirect()->route('admin.banner.index')->with('store_message', 'Uğurla əlavə edildi');
     }
 
     /**
@@ -66,25 +63,18 @@ class BannerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(BannerUpdateRequest $request, string $id)
+    public function update(BannerRequest $request, string $id)
     {
         $banner = Banner::findOrFail($id);
         if ($request->hasFile('image')) {
             $file = $request->image;
             $banner_img = time() . $file->getClientOriginalName();
-            $file->move('uploads/banner', $banner_img);
-
-            if (file_exists('uploads/banner/' . $banner->image_old)) {
-                unlink('uploads/banner/' . $banner->image_old);
-            }
+            $file->storeAs('public/uploads/banner', $banner_img);
 
             $banner->image = $banner_img;
-            $banner->image_old = $banner_img;
-        }else{
-            $banner->image = $banner->image_old;
         }
         $banner->save();
-        return redirect()->route('admin.banner.index')->with('success', 'Dəyişikliklər uğurla yadda saxlanıldı');
+        return redirect()->route('admin.banner.index')->with('update_message', 'Dəyişikliklər uğurla yadda saxlanıldı');
     }
 
     public function sort(Request $request){
@@ -102,7 +92,7 @@ class BannerController extends Controller
         $banner = Banner::findOrFail($id);
         $banner->destroy = 1;
         $banner->save();
-        return redirect()->route('admin.banner.index')->with('success','Uğurla silindi');
+        return redirect()->route('admin.banner.index')->with('delete_message','Uğurla silindi');
     }
 }
 

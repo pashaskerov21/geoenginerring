@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProjectStoreRequest extends FormRequest
+class ProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,20 +21,15 @@ class ProjectStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $isUpdateRequest = $this->isMethod('put');
         return [
             'category_id' => 'required',
             'title.*' => 'required',
-            'image' => 'required|image|mimes:png,jpg,jpeg,svg',
-        ];
-    }
-    public function messages()
-    {
-        return[
-            'category_id.required' => 'kateqoriya seçin',
-            'title.0.required' => 'title az mütləqdir',
-            'title.1.required' => 'title tr mütləqdir',
-            'title.2.required' => 'title en mütləqdir',
-            'title.3.required' => 'title ru mütləqdir',
+            'image' => [
+                $isUpdateRequest ? 'sometimes' : 'required',
+                'image',
+                'mimes:png,jpg,jpeg,svg,webp',
+            ],
         ];
     }
 }

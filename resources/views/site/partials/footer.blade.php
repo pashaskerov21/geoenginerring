@@ -11,7 +11,7 @@
                             @else
                             href="{{url(Session('lang').'/'.$menu->getTranslate->where('lang',Session('lang'))->first()->slug)}}"
                             @endif
-                        >{{ $menu->getTranslate->where('lang', Session('lang'))->first()->name }}
+                        >{{ $menu->getTranslate->where('lang', Session('lang'))->first()->title }}
                     </a>
                         @endforeach
                     </div>
@@ -56,7 +56,7 @@
         <div class="container">
             <div class="inner">
                 <a href="{{ route('index') }}" class="logo">
-                    <img src="{{ asset('uploads/settings/'.$settings->logo_white) }}" alt="logo">
+                    <img src="{{ asset('storage/uploads/settings/'.$settings->logo_white) }}" alt="logo">
                 </a>
                 <div class="right">
                     <div class="copyright">{{$settings->getTranslate->where('lang', Session('lang'))->first()->copyright}}</div>

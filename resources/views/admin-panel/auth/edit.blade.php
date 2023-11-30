@@ -14,26 +14,6 @@
                 @csrf
                 @method('PUT')
                 <div class="row">
-                    @if (session('success'))
-                        <div class="col-12">
-                            <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show"
-                                role="alert">
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                                {{ session('success') }}
-                            </div>
-                        </div>
-                    @endif
-                    @if (session('current-password-error'))
-                        <div class="col-12">
-                            <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show"
-                                role="alert">
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                                {{ session('current_password-error') }}
-                            </div>
-                        </div>
-                    @endif
                     @if ($errors->any())
                         <div class="col-12">
                             @foreach ($errors->all() as $error)

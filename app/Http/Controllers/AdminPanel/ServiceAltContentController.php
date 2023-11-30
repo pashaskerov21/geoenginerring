@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ServiceAltContentStoreRequest;
-use App\Http\Requests\ServiceAltContentUpdateRequest;
+use App\Http\Requests\ServiceAltContentRequest;
 use App\Models\Service;
 use App\Models\ServiceAltContent;
 use App\Models\ServiceAltContentTranslate;
@@ -33,22 +32,18 @@ class ServiceAltContentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ServiceAltContentStoreRequest $request)
+    public function store(ServiceAltContentRequest $request)
     {
-        $service = Service::findOrFail($request->service_id);
-        $service->content_count = $service->content_count + 1;
-        $service->save();
+
+        $new_image = null;
         if ($request->hasFile('image')) {
             $file = $request->image;
             $new_image = time() . $file->getClientOriginalName();
-            $file->move('uploads/services/altcontents', $new_image);
-        }else{
-            $new_image = null;
+            $file->storeAs('public/uploads/services/altcontents', $new_image);
         }
         $content_id = ServiceAltContent::create([
             'service_id' => $request->service_id,
             'image' => $new_image,
-            'image_old' => $new_image,
         ])->id;
         for($i = 0; $i < count($request->lang); $i++){
             ServiceAltContentTranslate::create([
@@ -58,7 +53,7 @@ class ServiceAltContentController extends Controller
                 'lang' => $request['lang'][$i],
             ]);
         }
-        return redirect()->route('admin.service-contents.index')->with('success', 'Uğurla əlavə edildi');
+        return redirect()->route('admin.service-contents.index')->with('store_message', 'Uğurla əlavə edildi');
     }
 
     /**
@@ -82,29 +77,17 @@ class ServiceAltContentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ServiceAltContentUpdateRequest $request, string $id)
+    public function update(ServiceAltContentRequest $request, string $id)
     {
 
         $altcontent = ServiceAltContent::findOrFail($id);
         $altcontent->service_id = $request->service_id;
-        if($request->service_id_old !== $request->service_id){
-            $oldService = Service::findOrFail($request->service_id_old);
-            $oldService->content_count = $oldService->content_count - 1;
-            $oldService->save();
-            $newService = Service::findOrFail($request->service_id);
-            $newService->content_count = $newService->content_count + 1;
-            $newService->save();    
-        };
         if ($request->hasFile('image')) {
             $file = $request->image;
             $new_image = time() . $file->getClientOriginalName();
-            $file->move('uploads/services/altcontents', $new_image);
+            $file->storeAs('public/uploads/services/altcontents', $new_image);
 
-            $altcontent->image = $new_image;
-            $altcontent->image_old = $new_image;
-            
-        }else{
-            $altcontent->image = $altcontent->image_old;
+            $altcontent->image = $new_image;            
         }
         $altcontent->save();
         for($i = 0; $i < count($request->lang); $i++){
@@ -114,7 +97,7 @@ class ServiceAltContentController extends Controller
                 'lang' => $request['lang'][$i],
             ]);
         }
-        return redirect()->back()->with('success', 'Dəyişikliklər uğurla yadda saxlanıldı');
+        return redirect()->back()->with('update_message', 'Dəyişikliklər uğurla yadda saxlanıldı');
     }
 
     public function sort(Request $request){
@@ -132,9 +115,6 @@ class ServiceAltContentController extends Controller
         $altcontent = ServiceAltContent::findOrFail($id);
         $altcontent->destroy = 1;
         $altcontent->save();
-        $service = Service::findOrFail($altcontent->service_id);
-        $service->content_count = $service->content_count - 1;
-        $service->save();
-        return redirect()->route('admin.service-contents.index')->with('success','Uğurla silindi');
+        return redirect()->route('admin.service-contents.index')->with('delete_message','Uğurla silindi');
     }
 }

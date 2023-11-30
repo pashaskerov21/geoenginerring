@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceAltContent extends Model
 {
     use HasFactory;
-    protected $fillable = ['service_id', 'image', 'image_old', 'sort', 'destroy'];
+    protected $fillable = ['service_id', 'image', 'sort', 'destroy'];
     public function getTranslate(){
         return $this->hasMany(ServiceAltContentTranslate::class, 'content_id', 'id');
     }

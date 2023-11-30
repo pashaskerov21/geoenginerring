@@ -17,7 +17,7 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (in_array($request->segment(1), ['tr', 'en', 'ru'])) {
+        if (in_array($request->segment(1), ['en', 'ru'])) {
             app()->setLocale($request->segment(1));
             Session::put('lang', $request->segment(1));
             return $next($request);

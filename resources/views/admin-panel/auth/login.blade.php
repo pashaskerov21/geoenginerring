@@ -20,14 +20,6 @@
 
         <form action="{{route('admin.login.submit')}}" method="post">
             @csrf
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-                    <strong>Xəta - </strong> {{session('error')}}
-                </div>
-            
-                
-            @endif
             <div class="mb-3">
                 <label for="emailaddress" class="form-label">Email address</label>
                 <input class="form-control" type="email" id="emailaddress" required placeholder="Enter your email" name="email">

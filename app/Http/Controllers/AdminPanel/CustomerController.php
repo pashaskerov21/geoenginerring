@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CustomerStoreRequest;
-use App\Http\Requests\CustomerUpdateRequest;
+use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -30,20 +29,19 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CustomerStoreRequest $request)
+    public function store(CustomerRequest $request)
     {
+        $customer_img = null;
         if ($request->hasFile('image')) {
             $file = $request->image;
             $customer_img = time() . $file->getClientOriginalName();
-            $file->move('uploads/customers', $customer_img);
-
-            Customer::create([
-                'image' => $customer_img,
-                'image_old' => $customer_img,
-                'url' => $request->url,
-            ]);
-            return redirect()->route('admin.customers.index')->with('success', 'Uğurla əlavə edildi');
+            $file->storeAs('public/uploads/customers', $customer_img);
         }
+        Customer::create([
+            'image' => $customer_img,
+            'url' => $request->url,
+        ]);
+        return redirect()->route('admin.customers.index')->with('store_message', 'Uğurla əlavə edildi');
     }
 
     /**
@@ -66,26 +64,19 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CustomerUpdateRequest $request, string $id)
+    public function update(CustomerRequest $request, string $id)
     {
         $customer = Customer::findOrFail($id);
         if ($request->hasFile('image')) {
             $file = $request->image;
             $customer_img = time() . $file->getClientOriginalName();
-            $file->move('uploads/customers', $customer_img);
-
-            if (file_exists('uploads/customers/' . $customer->image_old)) {
-                unlink('uploads/customers/' . $customer->image_old);
-            }
+            $file->storeAs('public/uploads/customers', $customer_img);
 
             $customer->image = $customer_img;
-            $customer->image_old = $customer_img;
-        }else{
-            $customer->image = $customer->image_old;
         }
         $customer->url = $request->url;
         $customer->save();
-        return redirect()->route('admin.customers.index')->with('success', 'Dəyişikliklər uğurla yadda saxlanıldı');
+        return redirect()->route('admin.customers.index')->with('update_message', 'Dəyişikliklər uğurla yadda saxlanıldı');
     }
 
     public function sort(Request $request){
@@ -103,6 +94,6 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
         $customer->destroy = 1;
         $customer->save();
-        return redirect()->route('admin.customers.index')->with('success','Uğurla silindi');
+        return redirect()->route('admin.customers.index')->with('delete_message','Uğurla silindi');
     }
 }

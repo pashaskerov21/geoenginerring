@@ -25,13 +25,4 @@ class VacancyRequest extends FormRequest
             'title.*' => 'required',
         ];
     }
-    public function messages()
-    {
-        return[
-            'title.0.required' => 'başlıq az mütləqdir',
-            'title.1.required' => 'başlıq tr mütləqdir',
-            'title.2.required' => 'başlıq en mütləqdir',
-            'title.3.required' => 'başlıq ru mütləqdir',
-        ];
-    }
 }

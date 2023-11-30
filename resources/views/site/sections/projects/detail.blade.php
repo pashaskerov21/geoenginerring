@@ -22,7 +22,7 @@
             </div>
             <div class="col-12 col-lg-6">
                 <div class="project-img">
-                    <img src="{{ asset('uploads/projects/' . $project->image) }}" alt="">
+                    <img src="{{ asset('storage/uploads/projects/' . $project->image) }}" alt="">
                 </div>
             </div>
         </div>

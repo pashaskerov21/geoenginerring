@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('setting_id')->default(1);
             $table->string('title')->nullable();
-            $table->string('address_az')->nullable();
-            $table->string('address_tr')->nullable();
+            $table->string('address')->nullable();
             $table->string('description')->nullable();
             $table->string('keywords')->nullable();
             $table->string('author')->nullable();

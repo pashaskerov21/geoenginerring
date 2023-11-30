@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProjectStoreRequest;
-use App\Http\Requests\ProjectUpdateRequest;
+use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
 use App\Models\ProjectCategories;
 use App\Models\ProjectTranslate;
@@ -34,24 +33,21 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProjectStoreRequest $request)
+    public function store(ProjectRequest $request)
     {
+        $project_image = null;
         if ($request->hasFile('image')) {
             $file = $request->image;
-            $new_image = time() . $file->getClientOriginalName();
-            $file->move('uploads/projects', $new_image);
-        }else{
-            $new_image = null;
+            $project_image = time() . $file->getClientOriginalName();
+            $file->storeAs('public/uploads/projects', $project_image);
         }
-        if ($request->home_status) {
+        $homeStatus = 0;
+        if($request->home_status){
             $homeStatus = 1;
-        } else {
-            $homeStatus = 0;
         }
         $project_id = Project::create([
             'category_id' => $request->category_id,
-            'image' => $new_image,
-            'image_old' => $new_image,
+            'image' => $project_image,
             'address_url' => $request->address_url,
             'home_status' => $homeStatus,
         ])->id;
@@ -66,7 +62,7 @@ class ProjectController extends Controller
                 'lang' => $request['lang'][$i],
             ]);
         }
-        return redirect()->route('admin.projects.index')->with('success', 'Uğurla əlavə edildi');
+        return redirect()->route('admin.projects.index')->with('store_message', 'Uğurla əlavə edildi');
     }
 
     /**
@@ -90,26 +86,22 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProjectUpdateRequest $request, string $id)
+    public function update(ProjectRequest $request, string $id)
     {
         $project = Project::findOrFail($id);
         $project->category_id = $request->category_id;
         if ($request->hasFile('image')) {
             $file = $request->image;
             $new_image = time() . $file->getClientOriginalName();
-            $file->move('uploads/projects', $new_image);
+            $file->storeAs('public/uploads/projects', $new_image);
 
-            $project->image = $new_image;
-            $project->image_old = $new_image;
-            
-        }else{
-            $project->image = $project->image_old;
+            $project->image = $new_image;            
         }
-        if ($request->home_status) {
-            $project->home_status = 1;
-        }else{
-            $project->home_status = 0;
+        $homeStatus = 0;
+        if($request->home_status){
+            $homeStatus = 1;
         }
+        $project->home_status = $homeStatus;
         $project->save();
         for($i = 0; $i < count($request->lang); $i++){
             ProjectTranslate::where(['project_id' => $id, 'lang' => $request['lang'][$i]])->update([
@@ -121,7 +113,7 @@ class ProjectController extends Controller
                 'lang' => $request['lang'][$i],
             ]);
         }
-        return redirect()->back()->with('success', 'Dəyişikliklər uğurla yadda saxlanıldı');
+        return redirect()->back()->with('update_message', 'Dəyişikliklər uğurla yadda saxlanıldı');
     }
 
     public function sort(Request $request){
@@ -139,7 +131,7 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $project->destroy = 1;
         $project->save();
-        return redirect()->route('admin.projects.index')->with('success','Uğurla silindi');
+        return redirect()->route('admin.projects.index')->with('delete_message','Uğurla silindi');
 
     }
     public function updateHomeStatus(Request $request)

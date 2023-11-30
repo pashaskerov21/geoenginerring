@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class MenuTranslate extends Model
 {
     use HasFactory;
-    protected $fillable = ['menu_id', 'name', 'slug', 'lang'];
+    protected $fillable = ['menu_id', 'title', 'slug', 'lang'];
 }

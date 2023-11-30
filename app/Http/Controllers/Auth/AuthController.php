@@ -27,7 +27,7 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->route('admin.login')->with('error', 'Email və ya parol yanlışdır');
+            return redirect()->route('admin.login')->with('error_message', 'Email və ya parol yanlışdır');
         }
     }
     public function logout()
@@ -89,9 +89,9 @@ class AuthController extends Controller
                 $admin->password = Hash::make($request->new_password);
             }
             $admin->save();
-            return redirect()->back()->with('success', 'Dəyişikliklər uğurla yadda saxlanıldı');
+            return redirect()->back()->with('update_message', 'Dəyişikliklər uğurla yadda saxlanıldı');
         } else {
-            return redirect()->back()->with('current-password-error', 'Mövcud şifrə düzgün deyil');
+            return redirect()->back()->with('error_message', 'Mövcud şifrə düzgün deyil');
         }
     }
 

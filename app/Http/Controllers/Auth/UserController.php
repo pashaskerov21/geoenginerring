@@ -36,7 +36,7 @@ class UserController extends Controller
             'password' => 'required',
         ]);
         User::create($request->all());
-        return redirect()->route('admin.users.index')->with('success', 'Uğurla əlavə edildi');
+        return redirect()->route('admin.users.index')->with('store_message', 'Uğurla əlavə edildi');
     }
 
     /**
@@ -67,7 +67,7 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->user_type = $request->user_type;
         $user->update();
-        return redirect()->route('admin.users.index')->with('success', 'Dəyişikliklər uğurla yadda saxlanıldı');
+        return redirect()->route('admin.users.index')->with('update_message', 'Dəyişikliklər uğurla yadda saxlanıldı');
     }
 
     /**
@@ -77,6 +77,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success','Uğurla silindi');
+        return redirect()->route('admin.users.index')->with('delete_message','Uğurla silindi');
     }
 }

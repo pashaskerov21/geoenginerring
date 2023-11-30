@@ -44,7 +44,7 @@ class VacancyController extends Controller
                 'lang' => $request['lang'][$i],
             ]);
         };
-        return redirect()->route('admin.vacancy.index')->with('success', 'Uğurla əlavə edildi');
+        return redirect()->route('admin.vacancy.index')->with('store_message', 'Uğurla əlavə edildi');
     }
 
     /**
@@ -79,7 +79,7 @@ class VacancyController extends Controller
                 'lang' => $request['lang'][$i],
             ]);
         }
-        return redirect()->route('admin.vacancy.index')->with('success', 'Dəyişikliklər uğurla yadda saxlanıldı');
+        return redirect()->route('admin.vacancy.index')->with('update_message', 'Dəyişikliklər uğurla yadda saxlanıldı');
     }
 
     public function sort(Request $request){
@@ -97,6 +97,6 @@ class VacancyController extends Controller
         $vacancy = Vacancy::findOrFail($id);
         $vacancy->destroy = 1;
         $vacancy->save();
-        return redirect()->route('admin.vacancy.index')->with('success','Uğurla silindi');
+        return redirect()->route('admin.vacancy.index')->with('delete_message','Uğurla silindi');
     }
 }

@@ -2,15 +2,6 @@
 
 @section('content')
     <div class="row">
-        @if (session('success'))
-            <div class="col-12">
-                <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show" role="alert">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                        aria-label="Close"></button>
-                    {{ session('success') }}
-                </div>
-            </div>
-        @endif
         <div class="col-12 col-lg-7">
             <h4 class="page-title my-3">Şəxsi Məlumat</h4>
             <div class="card card-2">
@@ -20,7 +11,7 @@
                             <td>Şəkil</td>
                             <td>
                                 @if ($application->image)
-                                    <img style="width: 250px; height: 150px; object-fit: contain" src="{{ asset('uploads/applications/images/' . $application->image) }}" alt="">
+                                    <img style="width: 250px; height: 150px; object-fit: contain" src="{{ asset('storage/uploads/applications/images/' . $application->image) }}" alt="">
                                 @endif
                             </td>
                         </tr>
@@ -47,7 +38,7 @@
                         </tr>
                         <tr>
                             <td>CV</td>
-                            <td><a href="{{ asset('uploads/applications/cv/' . $application->cv) }}" target="_blank">Keçid
+                            <td><a href="{{ asset('storage/uploads/applications/cv/' . $application->cv) }}" target="_blank">Keçid
                                     edin</a></td>
                         </tr>
                         <tr>

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
-    protected $fillable = ['image', 'image_old', 'url', 'sort', 'destroy'];
+    protected $fillable = ['image', 'url', 'sort', 'destroy'];
 }

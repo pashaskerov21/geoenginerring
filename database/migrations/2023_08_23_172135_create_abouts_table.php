@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->string('home_image')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

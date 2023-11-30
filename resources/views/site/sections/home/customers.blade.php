@@ -6,7 +6,7 @@
                 @foreach ($customers as $customer)
                     <div class="swiper-slide">
                         <a href="{{$customer->url}}" target="_blank" class="customer-logo">
-                            <img src="{{ asset('uploads/customers/'.$customer->image) }}" alt="">
+                            <img src="{{ asset('storage/uploads/customers/'.$customer->image) }}" alt="">
                         </a>
                     </div>
                 @endforeach

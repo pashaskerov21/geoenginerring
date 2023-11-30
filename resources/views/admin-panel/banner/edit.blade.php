@@ -14,25 +14,13 @@
                 @csrf
                 @method('PUT')
                 <div class="row">
-                    @if ($errors->any())
-                        <div class="col-12">
-                            @foreach ($errors->all() as $error)
-                                <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show"
-                                    role="alert">
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
-                                    {{ $error }}
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
                     <div class="col-12 col-lg-7">
                         <div class="mb-3">
                             <label class="form-label">image</label>
                             <input type="file" class="form-control" name="image">
-                            @if ($banner->image_old)
+                            @if ($banner->image)
                                 <div class="image-review">
-                                    <img src="{{asset('uploads/banner/'.$banner->image_old)}}" alt="">
+                                    <img src="{{asset('storage/uploads/banner/'.$banner->image)}}" alt="">
                                 </div>
                             @endif
                         </div>

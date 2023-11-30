@@ -16,7 +16,7 @@
                         {!! $service->getTranslate->where('lang', Session('lang'))->first()->main_text !!}
                     </div>
                     @if ($service->catalog_pdf)
-                        <a href="{{ asset('uploads/services/pdf/' . $service_catalog_pdf) }}" target="_blank"
+                        <a href="{{ asset('storage/uploads/services/pdf/' . $service->catalog_pdf) }}" target="_blank"
                             class="secondary-button">
                             <i class="fa-regular fa-file-pdf"></i>
                             <span>{{__('main.download_catalog')}}</span>
@@ -26,7 +26,7 @@
             </div>
             <div class="col-12 col-lg-6 col-xl-5">
                 <div class="service-img">
-                    <img src="{{ asset('uploads/services/text-images/' . $service->text_img) }}" alt="">
+                    <img src="{{ asset('storage/uploads/services/text-images/' . $service->text_img) }}" alt="">
                 </div>
             </div>
         </div>
@@ -57,8 +57,8 @@
                                     <div class="col-12 col-xl-4">
                                         <div class="right">
                                             <div class="content-img">
-                                                <img src="{{ asset('uploads/services/altcontents/'.$content->image) }}"alt="">
-                                                <a href="{{ asset('uploads/services/altcontents/'.$content->image) }}"data-fancybox="">
+                                                <img src="{{ asset('storage/uploads/services/altcontents/'.$content->image) }}"alt="">
+                                                <a href="{{ asset('storage/uploads/services/altcontents/'.$content->image) }}"data-fancybox="">
                                                     <i class="fa-solid fa-magnifying-glass"></i>
                                                 </a>
                                             </div>

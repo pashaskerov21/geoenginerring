@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectCategoryTranslate extends Model
 {
     use HasFactory;
-    protected $fillable = ['category_id', 'name','slug', 'lang'];
+    protected $fillable = ['category_id', 'title','slug', 'lang'];
 }

@@ -14,27 +14,6 @@
                 @csrf
                 @method('PUT')
                 <div class="row">
-                    @if ($errors->any())
-                        <div class="col-12">
-                            <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show"
-                                role="alert">
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
-                                @foreach ($errors->all() as $error)
-                                    <div class="mb-1">{{ $error }}</div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-                    @if (session('success'))
-                        <div class="col-12">
-                            <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show"
-                                role="alert">
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                                {{ session('success') }}
-                            </div>
-                        </div>
-                    @endif
                     <div class="col-12 col-lg-6">
                         <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                             @foreach ($menu->getTranslate as $index => $translate)
@@ -51,9 +30,9 @@
                                 <div class="tab-pane show @if ($index == 0) active @endif"
                                     id="tab_{{ $translate->lang }}">
                                     <div class="mb-3">
-                                        <label class="form-label">name {{ $translate->lang }}</label>
-                                        <input type="text" class="form-control" name="name[]"
-                                            value="{{ $translate->name }}">
+                                        <label class="form-label">title {{ $translate->lang }}</label>
+                                        <input type="text" class="form-control" name="title[]"
+                                            value="{{ $translate->title }}">
                                         <input type="hidden" name="lang[]" value="{{ $translate->lang }}">
                                     </div>
                                 </div>

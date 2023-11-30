@@ -9,16 +9,6 @@
         </div>
     </div>
     <div class="row">
-        @if (session('success'))
-            <div class="col-12">
-                <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show" role="alert">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                        aria-label="Close"></button>
-                    {{ session('success') }}
-                </div>
-            </div>
-        @endif
-
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -46,7 +36,7 @@
                     @foreach ($menues as $menu)
                         <tr id="sort_{{ $menu->id }}">
                             <td>{{ $loop->index + 1 }}</td>
-                            <td>{{ $menu->getTranslate->first()->name }}</td>
+                            <td>{{ $menu->getTranslate->first()->title }}</td>
                             <td class="table-action d-flex" style="height: 70px">
                                 <a href="{{route('admin.menu.edit', $menu->id)}}" class="action-icon me-1"> <i class="mdi mdi-square-edit-outline"></i></a>
                                 <form action="{{ route('admin.menu.destroy', $menu->id) }}" method="post">

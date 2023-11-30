@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('image')->nullable();
-            $table->string('image_old')->nullable();
             $table->string('url')->nullable();
             $table->integer('sort')->default(-1);
             $table->integer('destroy')->default(0);

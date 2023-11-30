@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('about_translates', function (Blueprint $table) {
             $table->id();
             $table->integer('about_id')->default(1);
-            $table->text('hometext')->nullable();
-            $table->text('maintext')->nullable();
+            $table->text('home_text')->nullable();
+            $table->text('main_text')->nullable();
             $table->string('lang')->nullable();
             $table->timestamps();
         });

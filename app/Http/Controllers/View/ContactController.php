@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\View;
 
 use App\Http\Controllers\Controller;
-use App\Models\AltMenu;
 use App\Models\Menu;
 use App\Models\Message;
 use App\Models\ProjectCategories;
@@ -16,13 +15,12 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $lang = ['az' => '/bizimle-elaqe', 'tr' => '/tr/iletisim', 'en' => '/en/contact-us', 'ru' => '/ru/kontakt'];
+        $lang = ['az' => '/bizimle-elaqe', 'en' => '/en/contact-us', 'ru' => '/ru/kontakt'];
         $settings = Settings::findOrFail(1);
         $menues = Menu::where('destroy', 0)->orderBy('sort')->get();
-        $altMenues = AltMenu::where('destroy', 0)->orderBy('sort')->get();
         $services = Service::where('destroy', 0)->orderBy('sort')->get();
         $projectcategories = ProjectCategories::where('destroy', 0)->orderBy('sort')->get();
-        return view('site.pages.contact', compact(['settings', 'lang', 'menues', 'altMenues', 'services', 'projectcategories']));
+        return view('site.pages.contact', compact(['settings', 'lang', 'menues', 'services', 'projectcategories']));
     }
     public function send(Request $request){
         Message::create($request->all());

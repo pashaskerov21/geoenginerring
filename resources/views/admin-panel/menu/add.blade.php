@@ -13,27 +13,11 @@
             <form action="{{ route('admin.menu.store') }}" method="POST">
                 @csrf
                 <div class="row">
-                    @if ($errors->any())
-                        <div class="col-12">
-                            <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show"
-                                role="alert">
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
-                                @foreach ($errors->all() as $error)
-                                    <div class="mb-1">{{ $error }}</div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
                     <div class="col-12 col-lg-7">
                         <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                             <li class="nav-item">
                                 <a href="#tab_az" data-bs-toggle="tab" class="nav-link rounded-0 active">
                                     <span>az</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#tab_tr" data-bs-toggle="tab" class="nav-link rounded-0">
-                                    <span>tr</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -51,29 +35,22 @@
                         <div class="tab-content">
                             <div class="tab-pane show active" id="tab_az">
                                 <div class="mb-3">
-                                    <label class="form-label">name az</label>
-                                    <input type="text" class="form-control" name="name[]">
+                                    <label class="form-label">title az</label>
+                                    <input type="text" class="form-control" name="title[]">
                                     <input type="hidden" name="lang[]" value="az">
-                                </div>
-                            </div>
-                            <div class="tab-pane show" id="tab_tr">
-                                <div class="mb-3">
-                                    <label class="form-label">name tr</label>
-                                    <input type="text" class="form-control" name="name[]">
-                                    <input type="hidden" name="lang[]" value="tr">
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab_en">
                                 <div class="mb-3">
-                                    <label class="form-label">name en</label>
-                                    <input type="text" class="form-control" name="name[]">
+                                    <label class="form-label">title en</label>
+                                    <input type="text" class="form-control" name="title[]">
                                     <input type="hidden" name="lang[]" value="en">
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab_ru">
                                 <div class="mb-3">
-                                    <label class="form-label">name ru</label>
-                                    <input type="text" class="form-control" name="name[]">
+                                    <label class="form-label">title ru</label>
+                                    <input type="text" class="form-control" name="title[]">
                                     <input type="hidden" name="lang[]" value="ru">
                                 </div>
                             </div>

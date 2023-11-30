@@ -14,24 +14,21 @@ class AboutController extends Controller
         return view('admin-panel.about.index', compact('about'));
     }
     public function update(Request $request){
-        $this->validate($request, [
-            'home_image' => 'image|mimes:png,jpg,jpeg,svg',
-        ]);
         $about = About::findOrFail(1);
-        if ($request->hasFile('home_image')) {
-            $file = $request->home_image;
+        if ($request->hasFile('image')) {
+            $file = $request->image;
             $new_image = time() . $file->getClientOriginalName();
-            $file->move('uploads/about', $new_image);
+            $file->storeAs('public/uploads/about', $new_image);
 
-            $about->home_image = $new_image;
+            $about->image = $new_image;
         }
         for($i = 0; $i < count($request->lang); $i++){
             AboutTranslate::where(['about_id' => 1, 'lang' => $request['lang'][$i]])->update([
-                'hometext' => $request->hometext[$i],
-                'maintext' => $request->maintext[$i],
+                'home_text' => $request->home_text[$i],
+                'main_text' => $request->main_text[$i],
             ]);
         }
         $about->save();
-        return redirect()->route('admin.about')->with('success','Məlumatlar uğurla yeniləndi');
+        return redirect()->route('admin.about')->with('update_message','Məlumatlar uğurla yeniləndi');
     }
 }

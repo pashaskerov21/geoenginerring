@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->integer('service_id');
             $table->string('image')->nullable();
-            $table->string('image_old')->nullable();
             $table->integer('sort')->default(-1);
             $table->integer('destroy')->default(0);
             $table->timestamps();

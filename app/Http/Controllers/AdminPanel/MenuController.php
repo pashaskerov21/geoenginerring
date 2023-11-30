@@ -37,12 +37,11 @@ class MenuController extends Controller
         for($i = 0; $i < count($request->lang); $i++){
             MenuTranslate::create([
                 'menu_id' => $menu_id,
-                'name' => $request['name'][$i],
-                'slug' => Str::slug($request['name'][$i]),
+                'title' => $request['title'][$i],
                 'lang' => $request['lang'][$i],
             ]);
         };
-        return redirect()->route('admin.menu.index')->with('success', 'Uğurla əlavə edildi');
+        return redirect()->route('admin.menu.index')->with('store_message', 'Uğurla əlavə edildi');
     }
 
     /**
@@ -71,12 +70,11 @@ class MenuController extends Controller
         $menu->save();
         for($i = 0; $i < count($request->lang); $i++){
             MenuTranslate::where(['menu_id' => $id, 'lang' => $request['lang'][$i]])->update([
-                'name' => $request['name'][$i],
-                'slug' => Str::slug($request['name'][$i]),
+                'title' => $request['title'][$i],
                 'lang' => $request['lang'][$i],
             ]);
         }
-        return redirect()->back()->with('success', 'Dəyişikliklər uğurla yadda saxlanıldı');
+        return redirect()->back()->with('update_message', 'Dəyişikliklər uğurla yadda saxlanıldı');
     }
 
     public function sort(Request $request){
@@ -94,6 +92,6 @@ class MenuController extends Controller
         $menu = Menu::findOrFail($id);
         $menu->destroy = 1;
         $menu->save();
-        return redirect()->route('admin.menu.index')->with('success','Uğurla silindi');
+        return redirect()->route('admin.menu.index')->with('delete_message','Uğurla silindi');
     }
 }

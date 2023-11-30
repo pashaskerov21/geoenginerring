@@ -13,37 +13,11 @@
             <form action="{{route('admin.settings.update')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    @if ($errors->any())
-                        <div class="col-12">
-                            @foreach ($errors->all() as $error)
-                                <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show"
-                                    role="alert">
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
-                                    {{ $error }}
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                    @if (session('success'))
-                        <div class="col-12">
-                            <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show" role="alert">
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                                {{ session('success') }}
-                            </div>
-                        </div>
-                    @endif
                     <div class="col-12 col-lg-6">
                         <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                             <li class="nav-item">
                                 <a href="#tab_az" data-bs-toggle="tab" class="nav-link rounded-0 active">
                                     <span>az</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#tab_tr" data-bs-toggle="tab" class="nav-link rounded-0">
-                                    <span>tr</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -65,12 +39,8 @@
                                         <input type="text" class="form-control" name="title[]" value="{{$translate->title}}">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">ünvan (Azərbaycan) {{$translate->lang}}</label>
-                                        <input type="text" class="form-control" name="address_az[]" value="{{$translate->address}}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">ünvan (Türkiyə) {{$translate->lang}}</label>
-                                        <input type="text" class="form-control" name="address_tr[]" value="{{$translate->address}}">
+                                        <label class="form-label">ünvan {{$translate->lang}}</label>
+                                        <input type="text" class="form-control" name="address[]" value="{{$translate->address}}">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">description {{$translate->lang}}</label>
@@ -100,62 +70,50 @@
                         <div class="mb-3">
                             <label class="form-label">logo</label>
                             <input type="file" class="form-control" name="logo">
-                            <input type="hidden" name="logo_old" value="{{$settings->logo}}">
                             @if ($settings->logo)
                                 <div class="image-review">
-                                    <img src="{{asset('uploads/settings/'.$settings->logo)}}" alt="">
+                                    <img src="{{asset('storage/uploads/settings/'.$settings->logo)}}" alt="">
                                 </div>
                             @endif
                         </div>
                         <div class="mb-3">
                             <label class="form-label">logo ağ</label>
                             <input type="file" class="form-control" name="logo_white">
-                            <input type="hidden" name="logo_white_old" value="{{$settings->logo_white}}">
                             @if ($settings->logo_white)
                                 <div class="image-review">
-                                    <img src="{{asset('uploads/settings/'.$settings->logo_white)}}" alt="">
+                                    <img src="{{asset('storage/uploads/settings/'.$settings->logo_white)}}" alt="">
                                 </div>
                             @endif
                         </div>
                         <div class="mb-3">
                             <label class="form-label">favicon</label>
                             <input type="file" class="form-control" name="favicon">
-                            <input type="hidden" name="favicon_old" value="{{$settings->favicon}}">
                             @if ($settings->favicon)
                                 <div class="image-review">
-                                    <img src="{{asset('uploads/settings/'.$settings->favicon)}}" alt="">
+                                    <img src="{{asset('storage/uploads/settings/'.$settings->favicon)}}" alt="">
                                 </div>
                             @endif
                         </div>
                         <div class="mb-3">
                             <label class="form-label">favicon ağ</label>
                             <input type="file" class="form-control" name="favicon_white">
-                            <input type="hidden" name="favicon_white_old" value="{{$settings->favicon_white}}">
                             @if ($settings->favicon_white)
                                 <div class="image-review">
-                                    <img src="{{asset('uploads/settings/'.$settings->favicon_white)}}" alt="">
+                                    <img src="{{asset('storage/uploads/settings/'.$settings->favicon_white)}}" alt="">
                                 </div>
                             @endif
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">ünvan (Azərbaycan) url</label>
-                            <input type="text" class="form-control" name="address_url_az" value="{{$settings->address_url_tr}}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">ünvan (Türkiyə) url</label>
-                            <input type="text" class="form-control" name="address_url_tr" value="{{$settings->address_url_tr}}">
+                            <label class="form-label">ünvan (map url)</label>
+                            <input type="text" class="form-control" name="address_url" value="{{$settings->address_url}}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">mail</label>
                             <input type="text" class="form-control" name="mail" value="{{$settings->mail}}">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">telefon (Azərbaycan)</label>
-                            <input type="text" class="form-control" name="phone_az" value="{{$settings->phone_az}}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">telefon (Türkiyə)</label>
-                            <input type="text" class="form-control" name="phone_tr" value="{{$settings->phone_az}}">
+                            <label class="form-label">telefon</label>
+                            <input type="text" class="form-control" name="phone" value="{{$settings->phone}}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">facebook</label>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('menu_translates', function (Blueprint $table) {
             $table->id();
             $table->integer('menu_id');
-            $table->string('name');
+            $table->string('title');
             $table->string('slug');
             $table->string('lang');
             $table->timestamps();

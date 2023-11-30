@@ -10,15 +10,6 @@
     </div>
 
     <div class="row">
-        @if (session('success'))
-            <div class="col-12">
-                <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show" role="alert">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
-                        aria-label="Close"></button>
-                    {{ session('success') }}
-                </div>
-            </div>
-        @endif
         <div class="col-12 col-lg-7">
             <div class="card">
                 <div class="card-body">

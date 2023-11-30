@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AltMenuRequest extends FormRequest
+class SettingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +22,10 @@ class AltMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name.*' => 'required',
-            'parent_id' => 'required',
-        ];
-    }
-    public function messages(){
-        return [
-            'name.0.required' => 'name az mütləqdir',
-            'name.1.required' => 'name tr mütləqdir',
-            'name.2.required' => 'name en mütləqdir',
-            'name.3.required' => 'name ru mütləqdir',
-            'parent_id.required' => 'əsas menyu seçin'
+            'logo' => 'image|mimes:png,jpg,jpeg,svg,webp',
+            'logo_white' => 'image|mimes:png,jpg,jpeg,svg,webp',
+            'favicon' => 'image|mimes:png,jpg,jpeg,svg,webp',
+            'favicon_white' => 'image|mimes:png,jpg,jpeg,svg,webp',
         ];
     }
 }

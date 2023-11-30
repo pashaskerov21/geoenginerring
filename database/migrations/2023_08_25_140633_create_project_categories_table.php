@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('project_categories', function (Blueprint $table) {
             $table->id();
-            $table->integer('parent_id')->nullable();
-            $table->integer('header_status')->default();
+            $table->integer('header_status')->default(0);
             $table->integer('sort')->default(-1);
             $table->integer('destroy')->default(0);
             $table->timestamps();

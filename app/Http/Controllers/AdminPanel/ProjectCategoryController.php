@@ -35,32 +35,22 @@ class ProjectCategoryController extends Controller
      */
     public function store(ProjectCategoryRequest $request)
     {
-        $parentID = $request->parent_id;
-        if ($request->header_status) {
-            if ($request->parent_id) {
-                $headerStatus = 1;
-                $mainMenu = Menu::findOrFail($request->parent_id);
-                $mainMenu->parent = $mainMenu->parent + 1;
-                $mainMenu->save();
-            } else {
-                return redirect()->back()->with('menuError', 'Əsas Menyu seçin');
-            }
-        } else {
-            $headerStatus = 0;
+        $headerStatus = 0;
+        if($request->header_status){
+            $headerStatus = 1;
         }
         $category_id = ProjectCategories::create([
-            'parent_id' => $parentID,
-            'header_status' => $headerStatus
+            'header_status' => $headerStatus,
         ])->id;
         for ($i = 0; $i < count($request->lang); $i++) {
             ProjectCategoryTranslate::create([
                 'category_id' => $category_id,
-                'name' => $request['name'][$i],
-                'slug' => Str::slug($request['name'][$i]),
+                'title' => $request['title'][$i],
+                'slug' => Str::slug($request['title'][$i]),
                 'lang' => $request['lang'][$i],
             ]);
         };
-        return redirect()->route('admin.project-categories.index')->with('success', 'Uğurla əlavə edildi');
+        return redirect()->route('admin.project-categories.index')->with('store_message', 'Uğurla əlavə edildi');
     }
 
     /**
@@ -87,49 +77,21 @@ class ProjectCategoryController extends Controller
     public function update(ProjectCategoryRequest $request, string $id)
     {
         $category = ProjectCategories::findOrFail($id);
-        if ($request->header_status) {
-            if ($category->parent_id && $request->parent_id_old !== $request->parent_id) {
-                $oldMainMenu = Menu::findOrFail($request->parent_id_old);
-                $oldMainMenu->parent = $oldMainMenu->parent - 1;
-                $oldMainMenu->save();
-
-                $newMainMenu = Menu::findOrFail($request->parent_id);
-                $newMainMenu->parent = $newMainMenu->parent + 1;
-                $newMainMenu->save();
-                $category->parent_id = $request->parent_id;
-                $category->header_status = 1;
-            }else{
-                if ($request->parent_id) {
-                    $newMainMenu = Menu::findOrFail($request->parent_id);
-                    $newMainMenu->parent = $newMainMenu->parent + 1;
-                    $newMainMenu->save();
-                    $category->parent_id = $request->parent_id;
-                    $category->header_status = 1;
-                } else {
-                    return redirect()->back()->with('menuError', 'Əsas Menyu seçin');
-                }
-            }
-            $category->header_status = 1;
-        } else {
-            if ($category->parent_id) {
-                $oldMainMenu = Menu::findOrFail($category->parent_id);
-                $oldMainMenu->parent = $oldMainMenu->parent - 1;
-                $oldMainMenu->save();
-            }
-            $category->parent_id = null;
-            $category->header_status = 0;
+        $headerStatus = 0;
+        if($request->header_status){
+            $headerStatus = 1;
         }
+        $category->header_status = $headerStatus;
         $category->save();
-
 
         for ($i = 0; $i < count($request->lang); $i++) {
             ProjectCategoryTranslate::where(['category_id' => $id, 'lang' => $request['lang'][$i]])->update([
-                'name' => $request['name'][$i],
-                'slug' => Str::slug($request['name'][$i]),
+                'title' => $request['title'][$i],
+                'slug' => Str::slug($request['title'][$i]),
                 'lang' => $request['lang'][$i],
             ]);
         }
-        return redirect()->route('admin.project-categories.index')->with('success', 'Dəyişikliklər uğurla yadda saxlanıldı');
+        return redirect()->route('admin.project-categories.index')->with('update_message', 'Dəyişikliklər uğurla yadda saxlanıldı');
     }
 
     public function sort(Request $request)
@@ -153,6 +115,6 @@ class ProjectCategoryController extends Controller
             $mainMenu->save();
         }
         $category->save();
-        return redirect()->route('admin.project-categories.index')->with('success', 'Uğurla silindi');
+        return redirect()->route('admin.project-categories.index')->with('delete_message','Uğurla silindi');
     }
 }

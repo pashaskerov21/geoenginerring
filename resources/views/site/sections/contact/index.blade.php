@@ -34,11 +34,7 @@
                 <div class="contact-info">
                     <a href="#" class="contact-link">
                         <i class="fa-solid fa-phone"></i>
-                        <span>{{ $settings->phone_az }}</span>
-                    </a>
-                    <a href="#" class="contact-link">
-                        <i class="fa-solid fa-phone"></i>
-                        <span>{{ $settings->phone_tr }}</span>
+                        <span>{{ $settings->phone }}</span>
                     </a>
                     <a href="#" class="contact-link">
                         <i class="fa-solid fa-envelope"></i>
@@ -46,11 +42,7 @@
                     </a>
                     <a href="#" class="contact-link">
                         <i class="fa-solid fa-location-dot"></i>
-                        <span>{{ $settings->getTranslate->where('lang', Session('lang'))->first()->address_az }}</span>
-                    </a>
-                    <a href="#" class="contact-link">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <span>{{ $settings->getTranslate->where('lang', Session('lang'))->first()->address_tr }}</span>
+                        <span>{{ $settings->getTranslate->where('lang', Session('lang'))->first()->address }}</span>
                     </a>
                     <div class="social-icons">
                         <a href="{{ $settings->facebook }}"><i class="fab fa-facebook-f"></i></a>

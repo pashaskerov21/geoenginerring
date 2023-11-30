@@ -22,15 +22,7 @@ class MenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name.*' => 'required',
-        ];
-    }
-    public function messages(){
-        return [
-            'name.0.required' => 'name az mütləqdir',
-            'name.1.required' => 'name tr mütləqdir',
-            'name.2.required' => 'name en mütləqdir',
-            'name.3.required' => 'name ru mütləqdir',
+            'title.*' => 'required',
         ];
     }
 }
